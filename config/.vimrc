@@ -65,6 +65,12 @@ let g:molokai_original=1
 let g:rehash256=1
 set background=dark
 
+" NERDtree
+autocmd vimenter * NERDTree
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeShowHidden = 1
+
 " 検索系
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
 set ignorecase
@@ -83,6 +89,7 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap :sp :split
 nnoremap :vsp :vsplist
 nnoremap :clo :close
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " Plugin
 " Note: Skip initialization for vim-tiny or vim-small.
@@ -120,17 +127,14 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/vimfiler.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 't9md/vim-textmanip'
-
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'airblade/vim-gitgutter'
-""NeoBundle 'https://bitbucket.org/kovisoft/slimv'
+NeoBundle 'scrooloose/nerdtree'
 
 call neobundle#end()
 
 filetype plugin indent on     " required!
 filetype indent on
 syntax on
-
-NeoBundleCheck
