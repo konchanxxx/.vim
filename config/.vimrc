@@ -58,12 +58,6 @@ set pumheight=10
 set showmatch
 set matchtime=1
 
-" カラースキーマ
-colorscheme molokai
-syntax on
-let g:molokai_original=1
-let g:rehash256=1
-set background=dark
 
 " NERDtree
 autocmd vimenter * NERDTree
@@ -93,48 +87,126 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " Plugin
 " Note: Skip initialization for vim-tiny or vim-small.
-if 0 | endif
-
-filetype off
-
-if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
-
-  set runtimepath+=~/.vim/bundle/neobundle.vim
-endif
-
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" originalrepos on github
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
-NeoBundle 'VimClojure'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'jpalardy/vim-slime'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 't9md/vim-textmanip'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'scrooloose/nerdtree'
-
-call neobundle#end()
-
+" if 0 | endif
+"
+" filetype off
+"
+" if has('vim_starting')
+"   if &compatible
+"     set nocompatible               " Be iMproved
+"   endif
+"
+"   set runtimepath+=~/.vim/bundle/neobundle.vim
+" endif
+"
+" call neobundle#begin(expand('~/.vim/bundle/'))
+"
+" " originalrepos on github
+" NeoBundle 'Shougo/neobundle.vim'
+" NeoBundle 'Shougo/vimproc', {
+"   \ 'build' : {
+"     \ 'windows' : 'make -f make_mingw32.mak',
+"     \ 'cygwin' : 'make -f make_cygwin.mak',
+"     \ 'mac' : 'make -f make_mac.mak',
+"     \ 'unix' : 'make -f make_unix.mak',
+"   \ },
+"   \ }
+" NeoBundle 'VimClojure'
+" NeoBundle 'Shougo/vimshell'
+" NeoBundle 'Shougo/unite.vim'
+" NeoBundle 'Shougo/neocomplcache'
+" NeoBundle 'Shougo/neosnippet'
+" NeoBundle 'jpalardy/vim-slime'
+" NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'Shougo/vimfiler.vim'
+" NeoBundle 'itchyny/lightline.vim'
+" NeoBundle 't9md/vim-textmanip'
+" NeoBundle 'Shougo/unite.vim'
+" NeoBundle 'ujihisa/unite-colorscheme'
+" NeoBundle 'tomasr/molokai'
+" NeoBundle 'airblade/vim-gitgutter'
+" NeoBundle 'scrooloose/nerdtree'
+"
+" call neobundle#end()
+"
 filetype plugin indent on     " required!
 filetype indent on
+
+" dein
+" Vim起動完了時にインストール
+augroup PluginInstall
+  autocmd!
+  autocmd VimEnter * if dein#check_install() | call dein#install() | endif
+augroup END
+
+" 各プラグインをインストールするディレクトリ
+let s:plugin_dir = expand('~/.vim/')
+
+" dein.vimをインストールするディレクトリをランタイムパスへ追加
+let s:dein_dir = s:plugin_dir . 'repos/github.com/Shougo/dein.vim'
+execute 'set runtimepath+=' . s:dein_dir
+
+" dein.vimがまだ入ってなければ 最初に git clone
+if !isdirectory(s:dein_dir)
+  call mkdir(s:dein_dir, 'p')
+  silent execute printf('!git clone %s %s', 'https://github.com/Shougo/dein.vim', s:dein_dir)
+endif
+
+"dein plugin settings
+if dein#load_state(s:plugin_dir)
+  call dein#begin(s:plugin_dir)
+endif
+
+" ここからインストールするプラグイン
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/neocomplcache.vim')
+call dein#add('Shougo/neocomplcache-rsense.vim')
+call dein#add('VimClojure')
+call dein#add('Shougo/vimshell')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/neosnippet')
+call dein#add('jpalardy/vim-slime')
+call dein#add('scrooloose/syntastic')
+call dein#add('Shougo/vimfiler.vim')
+call dein#add('itchyny/lightline.vim')
+call dein#add('t9md/vim-textmanip')
+call dein#add('Shougo/unite.vim')
+call dein#add('ujihisa/unite-colorscheme')
+call dein#add('tomasr/molokai.vim')
+call dein#add('airblade/vim-gitgutter')
+call dein#add('scrooloose/nerdtree')
+
+" neocomplcacheの設定
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+
+" Rsense用の設定
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+"rsenseのインストールフォルダがデフォルトと異なるので設定
+let g:rsenseHome = expand("~/.rbenv/shims/rsense")
+let g:rsenseUseOmniFunc = 1
+
+" カラースキーマ
+colorscheme molokai
 syntax on
+let g:molokai_original=1
+let g:rehash256=1
+set background=dark

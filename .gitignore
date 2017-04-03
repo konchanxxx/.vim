@@ -3,3 +3,5 @@ colors/
 molokai/
 .netrwhist
 dein/
+repos/
+.cache/
