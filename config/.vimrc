@@ -175,6 +175,7 @@ call dein#add('ujihisa/unite-colorscheme')
 call dein#add('tomasr/molokai.vim')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('scrooloose/nerdtree')
+call dein#add('tpope/vim-endwise/plugin/endwise.vim')
 
 " neocomplcacheの設定
 " Disable AutoComplPop.
