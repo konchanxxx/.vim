@@ -1,6 +1,6 @@
-git clone https://github.com/tomasr/molokai
-mkdir ~/.vim/colors
-mv molokai/colors/molokai.vim ~/.vim/colors/
+git clone https://github.com/tomasr/molokai ~/.vim/
+
+curl --create-dirs -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 gem install rsense
 apm install autocomplete-ruby

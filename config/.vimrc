@@ -85,6 +85,8 @@ nnoremap :vsp :vsplist
 nnoremap :clo :close
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
+execute pathogen#infect()
+
 " Plugin
 " Note: Skip initialization for vim-tiny or vim-small.
 " if 0 | endif
