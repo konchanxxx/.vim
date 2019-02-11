@@ -6,3 +6,7 @@ dein/
 repos/
 .cache/
 autoload/
+ftdetect/
+snippets/
+syntax/
+
